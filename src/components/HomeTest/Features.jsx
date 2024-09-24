@@ -15,13 +15,19 @@ const Features = () => {
             </div>
             <div class="box">
                 <img src="image/feature-img-2.png"/>
-                <h3>Freash And Organic</h3>
+                <h3>Free Delivery</h3>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae</p>
                 <a href="#" class="btn">Read More</a>
             </div>
             <div class="box">
                 <img src="image/feature-img-3.png"/>
-                <h3>Freash And Organic</h3>
+                <h3>Easy Payments</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae</p>
+                <a href="#" class="btn">Read More</a>
+            </div>
+            <div class="box">
+                <img src="image/feature-img-4.jfif"/>
+                <h3>Customar Support</h3>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae</p>
                 <a href="#" class="btn">Read More</a>
             </div>
