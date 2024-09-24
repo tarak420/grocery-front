@@ -6,7 +6,7 @@ import { BASE_URL } from '../../utils/constants';
 // Add a product to the cart
 export const addToCart = async (item) => {
   const token = getToken(); // Retrieve the token for authentication
-
+ console.log(item)
   try {
     const response = await axios.post(`${BASE_URL}/users/cart`, item, {
       headers: {
@@ -14,6 +14,7 @@ export const addToCart = async (item) => {
         'Content-Type': 'application/json' // Ensure JSON content-type
       }
     });
+    console.log('api call: ',response.data)
     return response.data; // Return the response data
   } catch (error) {
     console.error('Error adding to cart:', error);
@@ -50,6 +51,7 @@ export const fetchCart = async () => {
         'Authorization': `Bearer ${token}`, // Add token in the Authorization header
       }
     });
+    console.log('fetch cart: ',response)
     return response.data;
   } catch (error) {
     console.error('Error fetching cart:', error);

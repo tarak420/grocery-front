@@ -3,13 +3,12 @@ import { BASE_URL } from '../../utils/constants';
 
 // Registration API call
 export const registerUser = async (userData) => {
-  const response = await axios.post(`${BASE_URL}/users/register`, {   headers: {
-    'Content-Type': 'multipart/form-data',
-  },},userData);
+  console.log('register',userData)
+  const response = await axios.post(`${BASE_URL}/users/register`, userData);
   
 
-
-   return response.data.message;;
+   console.log(response)
+   return response.data.message;
 };
 
 // Login API call (previously defined)

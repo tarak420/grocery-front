@@ -12,6 +12,22 @@ export const fetchProductsApi = async () => {
   return response?.data; // Return the data directly
 };
 
+// productApi.js
+export const fetchProductByIdApi = async (productId) => {
+  const response = await axios(`${BASE_URL}/products/${productId}`, {
+    headers: {
+    
+      Authorization: `Bearer ${getToken()}`, // Include the token in the header
+    },
+  }); // Update with your API endpoint
+  console.log('api id byresp',response)
+  if (!response?.status == 200) {
+    throw new Error('Failed to fetch product');
+  }
+  console.log('api id byresp',response)
+  return await response?.data?.product;
+};
+
 export const createProductApi = async (productData) => {
   // Create a FormData object to handle file uploads
   const formData = new FormData();

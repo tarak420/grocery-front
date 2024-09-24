@@ -1,8 +1,16 @@
+// productSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchProductsApi, createProductApi, deleteProductApi, editProductApi } from './productApi'; // Assuming these API functions exist
+import {
+  fetchProductsApi,
+  fetchProductByIdApi,
+  createProductApi,
+  deleteProductApi,
+  editProductApi,
+} from './productApi'; // Assuming these API functions exist
 
 const initialState = {
   products: [],
+  selectedProduct: null, // To hold the details of the selected product
   status: 'idle',
   error: null,
 };
@@ -13,9 +21,16 @@ export const fetchProducts = createAsyncThunk('products/load', async () => {
   return response;
 });
 
+// Fetch product by ID
+export const fetchProductById = createAsyncThunk('products/fetchById', async (productId) => {
+  console.log("from slice:",productId)
+  const response = await fetchProductByIdApi(productId);
+  console.log(" resp frm slice ",response)
+  return response;
+});
+
 // Add a new product
 export const createProduct = createAsyncThunk('products/add', async (newProduct) => {
-  console.log('create pro',newProduct)
   const response = await createProductApi(newProduct);
   return response;
 });
@@ -49,11 +64,22 @@ const productSlice = createSlice({
         state.status = 'failed'; // Set failed state
         state.error = action.error.message; // Store error message
       })
+      .addCase(fetchProductById.pending, (state) => {
+        state.status = 'loading'; // Set loading state for fetching product by ID
+      })
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.status = 'succeeded'; // Set succeeded state
+        state.selectedProduct = action.payload; // Store the fetched product
+      })
+      .addCase(fetchProductById.rejected, (state, action) => {
+        state.status = 'failed'; // Set failed state
+        state.error = action.error.message; // Store error message
+      })
       .addCase(createProduct.fulfilled, (state, action) => {
         state.products.push(action.payload); // Add new product
       })
       .addCase(editProduct.fulfilled, (state, action) => {
-        const index = state.products.findIndex(product => product._id === action.payload._id);
+        const index = state.products.findIndex((product) => product._id === action.payload._id);
         if (index !== -1) {
           state.products[index] = action.payload; // Update edited product
         }

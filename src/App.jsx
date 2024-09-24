@@ -11,19 +11,25 @@ import SignupPage from './pages/auth/SignupPage';
 import Navbar from './components/shared/Navbar';
 import Header from './components/shared/Header';
 import HomeTest from './components/HomeTest';
+import ProductDetails from './components/HomeTest/ProductDetails';
+import ProductsPage from './components/HomeTest/ProductsPage';
+import Profile from './components/HomeTest/Profile';
 
 const App = () => {
   return (
     <Router>
       {/* <Navbar/> */}
-      <Header />
-      <div className='pt-5 mt-5 mx-auto px-4'>
+      {/* <Header /> */}
+      <div className=''>
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<HomeTest />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/profile" element={<Profile />}/>
           
           {/* Unauthorized route */}
           <Route path="/unauthorized" element={<UnauthorizedPage />} />

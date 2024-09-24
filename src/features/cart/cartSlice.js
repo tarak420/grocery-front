@@ -1,26 +1,55 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { addToCart, removeFromCart, fetchCart } from './cartApi';
 
+// Initial state
 const initialState = {
-  cart: [],
+  cart: JSON.parse(localStorage.getItem('tarek-ecom-cart')) || [], // Load cart from local storage
   status: 'idle',
   error: null,
 };
 
-// Thunks for async operations
+// Async Thunk to add a product to the cart
 export const addProductToCart = createAsyncThunk('cart/add', async (item) => {
-  const response = await addToCart(item);
-  return response; // The response should be the updated cart
+  let cart = JSON.parse(localStorage.getItem('tarek-ecom-cart')) || [];
+  
+  const existingItemIndex = cart.findIndex(cartItem => cartItem.productId === item.productId);
+  if (existingItemIndex !== -1) {
+    // If the item exists, update the quantity
+    cart[existingItemIndex].quantity += item.quantity; // Update quantity
+  } else {
+    // If it doesn't exist, push new item to cart
+    cart.push(item);
+  }
+  
+  // Save updated cart to local storage
+  localStorage.setItem('tarek-ecom-cart', JSON.stringify(cart));
+  return cart; // Return the updated cart
 });
 
+// Async Thunk to remove a product from the cart
 export const removeProductFromCart = createAsyncThunk('cart/remove', async (productId) => {
-  const response = await removeFromCart(productId);
-  return response; // The response should be the updated cart
+  let cart = JSON.parse(localStorage.getItem('tarek-ecom-cart')) || [];
+  cart = cart.filter(item => item.productId !== productId); // Remove item
+  localStorage.setItem('tarek-ecom-cart', JSON.stringify(cart)); // Save updated cart
+  return cart; // Return the updated cart
 });
 
+// Async Thunk to load the cart
 export const loadCart = createAsyncThunk('cart/load', async () => {
-  const response = await fetchCart();
-  return response; // Load the cart on startup
+  return JSON.parse(localStorage.getItem('tarek-ecom-cart')) || []; // Load cart from local storage
+});
+
+// Async Thunk to update the quantity of a product in the cart
+export const updateProductQuantity = createAsyncThunk('cart/updateQuantity', async ({ productId, quantity }) => {
+  let cart = JSON.parse(localStorage.getItem('tarek-ecom-cart')) || [];
+  
+  const existingItemIndex = cart.findIndex(cartItem => cartItem.productId === productId);
+  if (existingItemIndex !== -1) {
+    // Update the quantity if the item exists
+    cart[existingItemIndex].quantity = quantity;
+  }
+  
+  localStorage.setItem('tarek-ecom-cart', JSON.stringify(cart)); // Save updated cart
+  return cart; // Return the updated cart
 });
 
 const cartSlice = createSlice({
@@ -30,13 +59,16 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loadCart.fulfilled, (state, action) => {
-        state.cart = action.payload;
+        state.cart = action.payload; // Load the cart on startup
       })
       .addCase(addProductToCart.fulfilled, (state, action) => {
         state.cart = action.payload; // Assume API returns updated cart
       })
       .addCase(removeProductFromCart.fulfilled, (state, action) => {
-        state.cart = state.cart.filter((item) => item.product !== action.meta.arg);
+        state.cart = action.payload; // Update the cart after removal
+      })
+      .addCase(updateProductQuantity.fulfilled, (state, action) => {
+        state.cart = action.payload; // Update the cart after quantity change
       });
   },
 });
