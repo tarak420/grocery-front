@@ -53,6 +53,7 @@ export const createProductApi = async (productData) => {
       Authorization: `Bearer ${getToken()}`, // Include the token in the header
     },
   });
+  console.log(response?.data);
   return response.data; // Return the created product
 };
 

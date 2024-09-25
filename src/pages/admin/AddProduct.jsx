@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, createProduct, deleteProduct, editProduct } from '../../features/product/productSlice';
+import AdminHeader from './AdminHeader';
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -70,7 +71,9 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="min-h-screen p-8 bg-gray-100">
+   <div>
+    <AdminHeader/>
+    <div className="min-h-screen p-8 bg-gray-100 pt-[7em]">
       <h1 className="text-3xl font-bold text-gray-700 mb-6">Admin Product Management</h1>
 
       <button
@@ -177,6 +180,7 @@ const AddProduct = () => {
           ))}
       </div>
     </div>
+   </div>
   );
 };
 

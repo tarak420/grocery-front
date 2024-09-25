@@ -1,12 +1,15 @@
 // src/pages/AdminDashboard.js
 import React from 'react';
 import { useSelector } from 'react-redux';
+import AdminHeader from './AdminHeader';
 
 const AdminDashboard = () => {
   const { user } = useSelector((state) => state.auth);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
+  <div>
+    <AdminHeader/>
+       <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10 pt-[7em]">
       <h1 className="text-4xl font-bold text-gray-800 mb-6">Admin Dashboard</h1>
       <h2 className="text-2xl text-gray-600 mb-4">Welcome, {user?.name}</h2>
       <p className="text-lg text-gray-500 mb-8">
@@ -37,6 +40,7 @@ const AdminDashboard = () => {
         </ul>
       </div>
     </div>
+  </div>
   );
 };
 

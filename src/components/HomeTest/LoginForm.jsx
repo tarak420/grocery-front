@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import { login, register } from '../../features/auth/authSlice';
 
 const LoginForm = ({ isOpen, toggleLogin }) => {
@@ -9,7 +10,8 @@ const LoginForm = ({ isOpen, toggleLogin }) => {
   const [isLoginMode, setIsLoginMode] = useState(true); // Toggle between login and signup forms
   const [successMessage, setSuccessMessage] = useState(''); // State for success message
   const dispatch = useDispatch();
-  const { status, error } = useSelector((state) => state.auth);
+  const { status, error, user } = useSelector((state) => state.auth); // Access user from state
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,6 +39,17 @@ const LoginForm = ({ isOpen, toggleLogin }) => {
       setSuccessMessage(''); // Clear success message on error
     }
   }, [error]);
+
+  // Navigate based on user role (admin or regular user)
+  useEffect(() => {
+    if (user) {
+      if (user.role === 'admin') {
+        navigate('/admin'); // Redirect to admin dashboard if the user is an admin
+      } else {
+        navigate('/profile'); // Redirect to profile page if the user is a regular user
+      }
+    }
+  }, [user, navigate]);
 
   if (!isOpen) return null; // Don't render the form if it's not open
 
