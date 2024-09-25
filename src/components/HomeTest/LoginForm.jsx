@@ -43,8 +43,8 @@ const LoginForm = ({ isOpen, toggleLogin }) => {
   // Navigate based on user role (admin or regular user)
   useEffect(() => {
     if (user) {
-      if (user.role === 'admin') {
-        navigate('/admin'); // Redirect to admin dashboard if the user is an admin
+      if (user.isAdmin) {
+        navigate('/admin/dashboard'); // Redirect to admin dashboard if the user is an admin
       } else {
         navigate('/profile'); // Redirect to profile page if the user is a regular user
       }

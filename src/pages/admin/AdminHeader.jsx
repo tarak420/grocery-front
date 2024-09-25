@@ -25,10 +25,10 @@ const AdminHeader = () => {
         <Link to="/admin/products" className="hover:text-gray-800">
           Manage Products
         </Link>
-        <Link to="/admin/orders" className="hover:text-gray-800">
+        <Link to="#" className="hover:text-gray-800">
           Manage Orders
         </Link>
-        <Link to="/admin/users" className="hover:text-gray-800">
+        <Link to="#" className="hover:text-gray-800">
           Manage Users
         </Link>
       </nav>

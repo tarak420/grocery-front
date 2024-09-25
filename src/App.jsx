@@ -14,6 +14,7 @@ import HomeTest from './components/HomeTest';
 import ProductDetails from './components/HomeTest/ProductDetails';
 import ProductsPage from './components/HomeTest/ProductsPage';
 import Profile from './components/HomeTest/Profile';
+import AdminLogin from './pages/admin/AdminLogin';
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/profile" element={<Profile />}/>
+          <Route path="/admin/login" element={<AdminLogin />}/>
           
           {/* Unauthorized route */}
           <Route path="/unauthorized" element={<UnauthorizedPage />} />
